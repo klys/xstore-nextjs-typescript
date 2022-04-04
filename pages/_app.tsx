@@ -1,4 +1,9 @@
 import { AppProps } from "next/app";
+import Layout from "@components/Layout";
+import {AppContext} from "@context/AppContext";
+import { useState } from "react";
+
+import "bulma/css/bulma.css";
 /*
     here goes global css
     example:
@@ -13,7 +18,13 @@ export function reportWebVitals(metric) {
 }
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+  const [products, setProducts] = useState<any>([])
+  return (<AppContext.Provider value = {{products, setProducts}}>
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
+    </AppContext.Provider>)
+
 }
 
 // Only uncomment this method if you have blocking data requirements for

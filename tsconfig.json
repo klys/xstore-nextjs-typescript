@@ -4,6 +4,7 @@
       "target": "es6",
       "paths": {
         "@components/*": ["components/*"],
+        "@context/*": ["context/*"],
         "@public/*": ["public/*"],
       },
       "lib": ["dom", "dom.iterable", "esnext"],

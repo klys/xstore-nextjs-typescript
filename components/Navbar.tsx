@@ -1,6 +1,6 @@
 import React from "react";
 
-const Navbar = (props:{handleLoginVisible, handleShoppingCardVisible}) => {
+const Navbar = (props:{handleLoginVisible, handleShoppingCardVisible, handleSignUpCardVisibl}) => {
     return <>
     <nav className="navbar" role="navigation" aria-label="main navigation">
   <div className="navbar-brand">
@@ -54,7 +54,7 @@ const Navbar = (props:{handleLoginVisible, handleShoppingCardVisible}) => {
           <a className="button is-blank" onClick={props.handleShoppingCardVisible}>
                 🛒
           </a>
-          <a className="button is-primary">
+          <a className="button is-primary" onClick={props.handleSignUpCardVisibl}>
             <strong>Sign up</strong>
           </a>
           <a className="button is-light" onClick={props.handleLoginVisible}>

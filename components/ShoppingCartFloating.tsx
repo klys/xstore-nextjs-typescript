@@ -1,10 +1,16 @@
-import React from "react";
+import React,{useContext} from "react";
 import FloatingCard from "./FloatingCard";
-import { useAppContext } from "../context/AppContext";
+import { AppContext } from "../context/AppContext";
+
 
 const ShoppingCartFloating = (props:{visibility, handleVisible}) => {
-  const { products } = useAppContext();
+  const { products, removeProductItem } = useContext(AppContext);
   let total = 0;
+
+  const handleRemove = (id) => {
+    removeProductItem(id)
+  }
+
     return <>
     <FloatingCard options={{title: "Shopping Cart", color: "is-primary"}} visibility={props.visibility} handleVisible={props.handleVisible}>
   
@@ -19,7 +25,7 @@ const ShoppingCartFloating = (props:{visibility, handleVisible}) => {
   {(products) ? products.map((product, index) => {
     total = total+ +product.price;
     return<>
-    <a className="panel-block">
+    <a key={product.id} className="panel-block" onClick={() => handleRemove(product.id)}>
     <span className="panel-icon">
       <i className="fas fa-book" aria-hidden="true"/>
     </span>

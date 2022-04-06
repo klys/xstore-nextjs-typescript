@@ -1,7 +1,10 @@
-import React from "react";
+import React, {useContext, useEffect} from "react";
 import FloatingCard from "./FloatingCard";
+import {AppContext} from "../context/AppContext";
+
 import { io } from "socket.io-client";
 const socket = io("http://localhost:3001");
+
 
 socket.on("login", (data) => {
   console.log(data);
@@ -12,11 +15,32 @@ const LoginCardFloating = (props:{visibility, handleVisible}) => {
   const [password, setPassword] = React.useState("");
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+  const {displayMessage} = useContext(AppContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     socket.emit("login", { email, password })
   }
+
+  useEffect(() => {
+    const loginListener = (data) => {
+      console.log(data)
+      if (!data.success) {
+        
+        displayMessage({message:data.message, color:"is-danger", title:"Error"});
+      } else {
+        displayMessage({message:data.message, color:"is-success", title:"Success"});
+        
+      }
+      props.handleVisible();
+    }
+    socket.on('login', loginListener)
+    return () => {
+      socket.off('login', loginListener)
+    }
+  }, [socket])
+
+  
 
     return <>
     <FloatingCard options={{title:"Login",color:"is-success"}} visibility={props.visibility} handleVisible={props.handleVisible}>

@@ -1,10 +1,10 @@
-import React from "react";
+import React, {useContext} from "react";
 
-import { useAppContext } from "../context/AppContext";
+import { AppContext } from "../context/AppContext";
 
 const ProductCard = () => {
   
-  const {products, setProducts} = useAppContext();
+  const {addProductItem} = useContext(AppContext);
   
   const data ={
     id: Math.random()+100,
@@ -13,7 +13,7 @@ const ProductCard = () => {
   }
 
   const handleClick = () => {
-    setProducts([...products, data]);
+    addProductItem(data);
   }
 
     return <>

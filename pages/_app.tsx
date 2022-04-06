@@ -1,7 +1,6 @@
 import { AppProps } from "next/app";
 import Layout from "@components/Layout";
-import {AppContext} from "@context/AppContext";
-import { useState } from "react";
+import {Provider} from "@context/AppContext";
 
 
 import "bulma/css/bulma.css";
@@ -19,12 +18,11 @@ export function reportWebVitals(metric) {
 }
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [products, setProducts] = useState<any>([])
-  return (<AppContext.Provider value = {{products, setProducts}}>
+  return (<Provider>
     <Layout>
       <Component {...pageProps} />
     </Layout>
-    </AppContext.Provider>)
+    </Provider>)
 
 }
 

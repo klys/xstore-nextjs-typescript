@@ -11,7 +11,7 @@ const SignUpCardFloating = () => {
   const [repassword, setRepassword] = React.useState("");
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(false);
-  const context = useContext(AppContext);
+  const {displayMessage, toggleSignup, signup} = useContext(AppContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -25,13 +25,16 @@ const SignUpCardFloating = () => {
   useEffect(() => {
     const SignUpListener = (data) => {
       console.log("useEffect data:",data)
-      toggleWindow()
+      //toggleWindow()
+      toggleSignup()
       if (!data.success) {
         
-        context.globalDispatch({type:"DISPLAY_MESSAGE",messageData:{message:data.message, color:"is-danger", title:"Error"}});
+        //context.globalDispatch({type:"DISPLAY_MESSAGE",messageData:{message:data.message, color:"is-danger", title:"Error"}});
+        displayMessage({message:data.message, color:"is-danger", title:"Error"});
       } else {
         
-        context.globalDispatch({type: "DISPLAY_MESSAGE", messageData:{message:data.message, color:"is-success", title:"Success"}});
+        //context.globalDispatch({type: "DISPLAY_MESSAGE", messageData:{message:data.message, color:"is-success", title:"Success"}});
+        displayMessage({message:data.message, color:"is-success", title:"Success"});
       }
     }
     socket.on('signup', SignUpListener)
@@ -41,12 +44,12 @@ const SignUpCardFloating = () => {
     }
   }, [socket])
 
-  const toggleWindow = () => {  
+  /*const toggleWindow = () => {  
     context.globalDispatch({type:"TOGGLE_SIGNUP"})
-  }
+  }*/
 
     return <>
-    <FloatingCard options={{title:"Sign Up",color:"is-warning"}} visibility={context.globalState.signup} handleVisible={toggleWindow}>
+    <FloatingCard options={{title:"Sign Up",color:"is-warning"}} visibility={signup} handleVisible={toggleSignup}>
   
   <div className="">
   <div className="field">

@@ -4,9 +4,9 @@ import {AppContext} from '../context/AppContext';
 
 
 const MessageCardFloating = () => {
-  const context = useContext(AppContext);
-  const message = context.globalState.message;
-  const closeMessage = () => { context.globalDispatch({type:"CLOSE_MESSAGE"}); }
+  const {message, closeMessage} = useContext(AppContext);
+  //const message = context.globalState.message;
+  //const closeMessage = () => { context.globalDispatch({type:"CLOSE_MESSAGE"}); }
     return <>
     <FloatingCard options={{title: message.title, color: message.color}} visibility={message.display} handleVisible={closeMessage}>
   

@@ -93,8 +93,38 @@ export const AppContext = createContext<any>({});
 export const Provider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  const value = {
+    products: state.products,
+    message: state.message,
+    signup: state.signup,
+    login: state.login,
+    shoppingcart: state.shoppingcart,
+    addProductItem: (productItem) => {
+      dispatch({ type: actions.ADD_PRODUCT, productItem });
+    },
+    removeProductItem: (productId) => {
+      dispatch({ type: actions.REMOVE_PRODUCT, productId });
+    },
+    displayMessage: (messageData) => {
+      dispatch({ type: actions.DISPLAY_MESSAGE, messageData });
+    },
+    closeMessage: () => {
+      dispatch({type: actions.CLOSE_MESSAGE})
+    },
+    toggleSignup: () => {
+      dispatch({type: actions.TOGGLE_SIGNUP})
+    },
+    toggleLogin: () => {
+      dispatch({type: actions.TOGGLE_LOGIN})
+    },
+    toggleShoppingcart: () => {
+      dispatch({type: actions.TOGGLE_SHOPPINGCART})
+    }
+
+  };
+
   return (
-    <AppContext.Provider value={{globalState:state,globalDispatch:dispatch}}>
+    <AppContext.Provider value={value}>
       {children}
     </AppContext.Provider>
   );

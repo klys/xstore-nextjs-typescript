@@ -4,10 +4,11 @@ import { AppContext } from "../context/AppContext";
 
 
 const ShoppingCartFloating = () => {
-  const context = useContext(AppContext);
-  const products = context.globalState.products;
+  const {removeProductItem, toggleShoppingcart, products, shoppingcart} = useContext(AppContext);
+  
   let total = 0;
-
+  /*
+  const products = context.globalState.products;
   const handleRemove = (id:number) => {
     context.globalDispatch({type:"REMOVE_PRODUCT", productId:id});
   }
@@ -15,9 +16,9 @@ const ShoppingCartFloating = () => {
   const toggleWindow = () => {
     context.globalDispatch({type:"TOGGLE_SHOPPINGCART"});
   }
-
+  */
     return <>
-    <FloatingCard options={{title: "Shopping Cart", color: "is-primary"}} visibility={context.globalState.shoppingcart} handleVisible={toggleWindow}>
+    <FloatingCard options={{title: "Shopping Cart", color: "is-primary"}} visibility={shoppingcart} handleVisible={toggleShoppingcart}>
   
   <div className="panel-block">
     <p className="control has-icons-left">
@@ -30,7 +31,7 @@ const ShoppingCartFloating = () => {
   {(products) ? products.map((product) => {
     total = total+ +product.price;
     return<>
-    <a key={product.id} className="panel-block" onClick={() => handleRemove(product.id)}>
+    <a key={product.id} className="panel-block" onClick={() => removeProductItem(product.id)}>
     <span className="panel-icon">
       <i className="fas fa-book" aria-hidden="true"/>
     </span>

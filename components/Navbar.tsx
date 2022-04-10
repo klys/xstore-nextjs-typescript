@@ -2,15 +2,18 @@ import React, {useContext} from "react";
 import { AppContext } from "@context/AppContext";
 
 const Navbar = () => {
-  const context = useContext(AppContext);
-  const toggleLogin = () => {
-    context.globalDispatch({ type: "TOGGLE_LOGIN" });
+  const {toggleLogin,toggleShoppingcart,toggleSignup} = useContext(AppContext);
+  const buttonLogin = () => {
+    //context.globalDispatch({ type: "TOGGLE_LOGIN" });
+    toggleLogin()
   };
-  const toggleShoppingCart = () => {
-    context.globalDispatch({ type: "TOGGLE_SHOPPINGCART" });
+  const buttonShoppingCart = () => {
+    //context.globalDispatch({ type: "TOGGLE_SHOPPINGCART" });
+    toggleShoppingcart()
   };
-  const toggleSignup = () => {
-    context.globalDispatch({ type: "TOGGLE_SIGNUP" });
+  const buttonSignup = () => {
+    //context.globalDispatch({ type: "TOGGLE_SIGNUP" });
+    toggleSignup()
   };
     return <>
     <nav className="navbar" role="navigation" aria-label="main navigation">
@@ -62,13 +65,13 @@ const Navbar = () => {
     <div className="navbar-end">
       <div className="navbar-item">
         <div className="buttons">
-          <a className="button is-blank" onClick={toggleShoppingCart}>
+          <a className="button is-blank" onClick={buttonShoppingCart}>
                 🛒
           </a>
-          <a className="button is-primary" onClick={toggleSignup}>
+          <a className="button is-primary" onClick={buttonSignup}>
             <strong>Sign up</strong>
           </a>
-          <a className="button is-light" onClick={toggleLogin}>
+          <a className="button is-light" onClick={buttonLogin}>
             Log in
           </a>
         </div>

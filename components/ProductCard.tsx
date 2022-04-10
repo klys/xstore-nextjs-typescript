@@ -4,7 +4,7 @@ import { AppContext } from "../context/AppContext";
 
 const ProductCard = () => {
   
-  const context = useContext(AppContext);
+  const {addProductItem} = useContext(AppContext);
   
   const data ={
     id: Math.random()+100,
@@ -13,7 +13,8 @@ const ProductCard = () => {
   }
 
   const handleClick = () => {
-    context.globalDispatch({type:"ADD_PRODUCT", productItem:data});
+    //context.globalDispatch({type:"ADD_PRODUCT", productItem:data});
+    addProductItem(data);
   }
 
     return <>

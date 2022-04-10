@@ -15,27 +15,28 @@ const LoginCardFloating = () => {
   const [password, setPassword] = React.useState("");
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(false);
-  const context = useContext(AppContext);
+  const {toggleLogin, displayMessage, login} = useContext(AppContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     socket.emit("login", { email, password })
   }
 
-  const toggleLogin = () => {
-    context.globalDispatch({type:"TOGGLE_LOGIN"});
+  const toggleWindow = () => {
+    //context.globalDispatch({type:"TOGGLE_LOGIN"});
+    toggleLogin();
   }
 
   useEffect(() => {
     const loginListener = (data) => {
       console.log("useEffect data:",data)
-      toggleLogin();
+      toggleWindow();
       if (!data.success) {
-         
-        context.globalDispatch({type:"DISPLAY_MESSAGE" ,messageData:{message:data.message, color:"is-danger", title:"Error"}});
+         displayMessage({message:data.message, color:"is-danger", title:"Error"});
+        //context.globalDispatch({type:"DISPLAY_MESSAGE" ,messageData:{message:data.message, color:"is-danger", title:"Error"}});
       } else {
-        
-        context.globalDispatch({type:"DISPLAY_MESSAGE",messageData:{message:data.message, color:"is-success", title:"Success"}});
+        displayMessage({message:data.message, color:"is-success", title:"Success"});
+        //context.globalDispatch({type:"DISPLAY_MESSAGE",messageData:{message:data.message, color:"is-success", title:"Success"}});
         
       }
       
@@ -49,12 +50,10 @@ const LoginCardFloating = () => {
     }
   }, [socket])
 
-  const handleVisible = () => {
-    context.globalDispatch({type:"CLOSE_LOGIN"})
-  }
+  
 
     return <>
-    <FloatingCard options={{title:"Login",color:"is-success"}} visibility={context.globalState.login} handleVisible={toggleLogin}>
+    <FloatingCard options={{title:"Login",color:"is-success"}} visibility={login} handleVisible={toggleLogin}>
   <p className="panel-tabs">
     <a className="is-active">User</a>
     <a>Admin</a>

@@ -6,44 +6,55 @@ import { io } from "socket.io-client";
 const socket = io("http://localhost:3001");
 
 
-socket.on("login", (data) => {
-  console.log(data);
-})
+//socket.on("login", (data) => {
+//  console.log(data);
+//})
 
-const LoginCardFloating = (props:{visibility, handleVisible}) => {
+const LoginCardFloating = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(false);
-  const {displayMessage} = useContext(AppContext);
+  const context = useContext(AppContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     socket.emit("login", { email, password })
   }
 
+  const toggleLogin = () => {
+    context.globalDispatch({type:"TOGGLE_LOGIN"});
+  }
+
   useEffect(() => {
     const loginListener = (data) => {
-      console.log(data)
+      console.log("useEffect data:",data)
+      toggleLogin();
       if (!data.success) {
-        
-        displayMessage({message:data.message, color:"is-danger", title:"Error"});
+         
+        context.globalDispatch({type:"DISPLAY_MESSAGE" ,messageData:{message:data.message, color:"is-danger", title:"Error"}});
       } else {
-        displayMessage({message:data.message, color:"is-success", title:"Success"});
+        
+        context.globalDispatch({type:"DISPLAY_MESSAGE",messageData:{message:data.message, color:"is-success", title:"Success"}});
         
       }
-      props.handleVisible();
+      
+      
     }
+
     socket.on('login', loginListener)
+    
     return () => {
-      socket.off('login', loginListener)
+      //socket.off('login', loginListener)
     }
   }, [socket])
 
-  
+  const handleVisible = () => {
+    context.globalDispatch({type:"CLOSE_LOGIN"})
+  }
 
     return <>
-    <FloatingCard options={{title:"Login",color:"is-success"}} visibility={props.visibility} handleVisible={props.handleVisible}>
+    <FloatingCard options={{title:"Login",color:"is-success"}} visibility={context.globalState.login} handleVisible={toggleLogin}>
   <p className="panel-tabs">
     <a className="is-active">User</a>
     <a>Admin</a>

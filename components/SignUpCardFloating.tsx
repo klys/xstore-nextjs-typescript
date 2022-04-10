@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
 import FloatingCard from "./FloatingCard";
+import { AppContext } from "../context/AppContext";
 import { io } from "socket.io-client";
 const socket = io("http://localhost:3001");
 
-const SignUpCardFloating = (props:{visibility, handleVisible}) => {
+const SignUpCardFloating = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [name, setName] = React.useState("");
   const [repassword, setRepassword] = React.useState("");
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+  const context = useContext(AppContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,8 +22,31 @@ const SignUpCardFloating = (props:{visibility, handleVisible}) => {
     socket.emit("signup", { email, password, name })
   }
 
+  useEffect(() => {
+    const SignUpListener = (data) => {
+      console.log("useEffect data:",data)
+      toggleWindow()
+      if (!data.success) {
+        
+        context.globalDispatch({type:"DISPLAY_MESSAGE",messageData:{message:data.message, color:"is-danger", title:"Error"}});
+      } else {
+        
+        context.globalDispatch({type: "DISPLAY_MESSAGE", messageData:{message:data.message, color:"is-success", title:"Success"}});
+      }
+    }
+    socket.on('signup', SignUpListener)
+    
+    return () => {
+      //socket.off('signup', SignUpListener)
+    }
+  }, [socket])
+
+  const toggleWindow = () => {  
+    context.globalDispatch({type:"TOGGLE_SIGNUP"})
+  }
+
     return <>
-    <FloatingCard options={{title:"Sign Up",color:"is-warning"}} visibility={props.visibility} handleVisible={props.handleVisible}>
+    <FloatingCard options={{title:"Sign Up",color:"is-warning"}} visibility={context.globalState.signup} handleVisible={toggleWindow}>
   
   <div className="">
   <div className="field">

@@ -1,6 +1,17 @@
-import React from "react";
+import React, {useContext} from "react";
+import { AppContext } from "@context/AppContext";
 
-const Navbar = (props:{handleLoginVisible, handleShoppingCardVisible, handleSignUpCardVisibl}) => {
+const Navbar = () => {
+  const context = useContext(AppContext);
+  const toggleLogin = () => {
+    context.globalDispatch({ type: "TOGGLE_LOGIN" });
+  };
+  const toggleShoppingCart = () => {
+    context.globalDispatch({ type: "TOGGLE_SHOPPINGCART" });
+  };
+  const toggleSignup = () => {
+    context.globalDispatch({ type: "TOGGLE_SIGNUP" });
+  };
     return <>
     <nav className="navbar" role="navigation" aria-label="main navigation">
   <div className="navbar-brand">
@@ -51,13 +62,13 @@ const Navbar = (props:{handleLoginVisible, handleShoppingCardVisible, handleSign
     <div className="navbar-end">
       <div className="navbar-item">
         <div className="buttons">
-          <a className="button is-blank" onClick={props.handleShoppingCardVisible}>
+          <a className="button is-blank" onClick={toggleShoppingCart}>
                 🛒
           </a>
-          <a className="button is-primary" onClick={props.handleSignUpCardVisibl}>
+          <a className="button is-primary" onClick={toggleSignup}>
             <strong>Sign up</strong>
           </a>
-          <a className="button is-light" onClick={props.handleLoginVisible}>
+          <a className="button is-light" onClick={toggleLogin}>
             Log in
           </a>
         </div>

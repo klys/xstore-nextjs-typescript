@@ -8,31 +8,31 @@ const Index = () => {
     
     <div className="columns is-centered">
       <div className="column">
-        <ProductCard product = ""/>
+        <ProductCard/>
       </div>
       <div className="column ">
-        <ProductCard product = ""/>
+        <ProductCard />
       </div>
       <div className="column ">
-        <ProductCard product = ""/>
+        <ProductCard />
       </div>
       <div className="column ">
-        <ProductCard product = ""/>
+        <ProductCard />
       </div>
       
     </div>
     <div className="columns is-centered">
       <div className="column">
-        <ProductCard product = ""/>
+        <ProductCard />
       </div>
       <div className="column ">
-        <ProductCard product = ""/>
+        <ProductCard />
       </div>
       <div className="column ">
-        <ProductCard product = ""/>
+        <ProductCard />
       </div>
       <div className="column ">
-        <ProductCard product = ""/>
+        <ProductCard />
       </div>
       
     </div>

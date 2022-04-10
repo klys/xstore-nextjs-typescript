@@ -1,21 +1,25 @@
-import React from "react";
+import React,{useContext} from "react";
 import FloatingCard from "./FloatingCard";
+import {AppContext} from '../context/AppContext';
 
-const MessageCardFloating = (props:{visibility, handleVisible, data:{title:"Message", color:"is-info", message:"Just a notification!"}}) => {
-  let total = 0;
+
+const MessageCardFloating = () => {
+  const context = useContext(AppContext);
+  const message = context.globalState.message;
+  const closeMessage = () => { context.globalDispatch({type:"CLOSE_MESSAGE"}); }
     return <>
-    <FloatingCard options={{title: props.data.title, color: props.data.color}} visibility={props.visibility} handleVisible={props.handleVisible}>
+    <FloatingCard options={{title: message.title, color: message.color}} visibility={message.display} handleVisible={closeMessage}>
   
   
   
   <div className="panel-block">
     <p className="control">
-        {props.data.message}
+        {message.message}
     </p>
   </div>
   <div className="panel-block">
     <p className="control">
-        <a className="button is-link is-outlined" onClick={props.handleVisible}>
+        <a className="button is-link is-outlined" onClick={closeMessage}>
             <span>Okay</span>
         </a>
     </p>
